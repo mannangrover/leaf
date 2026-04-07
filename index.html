@@ -1,208 +1,632 @@
 <!DOCTYPE html>
-<!-- saved from url=(0071)https://adityasinha-1988.github.io/pblcse/pbl_ppt_template.html#problem -->
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PBL Presentation | 2026</title>
-
-<script src="./PBL Presentation _ 2026_files/saved_resource.js"></script>
-<script src="./PBL Presentation _ 2026_files/chart.js.download"></script>
-<link rel="stylesheet" href="./PBL Presentation _ 2026_files/all.min.css">
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-body { background-color: #020617; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-.glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-.gradient-text { background: linear-gradient(90deg, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-#timerContainer { background: #ffffff; color: #020617; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border: 3px solid #3b82f6; z-index: 1000; }
-@keyframes flicker { 0%, 100% { background-color: #ffffff; } 50% { background-color: #fca5a5; } }
-.timer-warning { animation: flicker 1s infinite; border: 3px solid #ef4444 !important; color: #b91c1c !important; }
-.timer-stop { background-color: #991b1b !important; color: #ffffff !important; border: 3px solid #f87171 !important; animation: none; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Credit Card Fraud Detection | PBL 2026</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --border:    #30363d;
+      --accent:    #2f81f7;
+      --accent2:   #3fb950;
+      --warn:      #f85149;
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --card:      #1c2128;
+      --font-head: 'Georgia', serif;
+      --font-body: 'Segoe UI', system-ui, sans-serif;
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+ 
+    /* ── Timer Bar ── */
+    #timer-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 20px;
+      font-size: 12px;
+      color: var(--muted);
+      z-index: 100;
+      letter-spacing: 0.05em;
+    }
+    #timer-display {
+      font-family: monospace;
+      color: var(--accent);
+      font-size: 13px;
+    }
+ 
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 33px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+      z-index: 99;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .nav-brand img {
+      height: 36px;
+      object-fit: contain;
+    }
+    .nav-label {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+    .nav-label strong {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+ 
+    /* ── Main Layout ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 130px 30px 80px;
+    }
+ 
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 60px 0 50px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
+    .reg-badge {
+      display: inline-block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 12px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+    .hero-statement {
+      max-width: 620px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+      border-left: 3px solid var(--accent);
+      padding-left: 16px;
+      text-align: left;
+    }
+ 
+    /* ── Section ── */
+    section {
+      margin-bottom: 64px;
+      scroll-margin-top: 90px;
+    }
+    section h2 {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+    }
+    section h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin: 28px 0 10px;
+    }
+    section p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+ 
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+    .card-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .card-body {
+      font-size: 13px;
+      color: var(--muted);
+    }
+ 
+    /* ── Pipeline ── */
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .pipe-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+    }
+    .pipe-num {
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pipe-content strong {
+      display: block;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .pipe-content span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+ 
+    /* ── Live Demo Button ── */
+    .demo-block {
+      margin-top: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .demo-text strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .demo-text span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .demo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 5px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .demo-btn:hover { opacity: 0.85; }
+ 
+    /* ── Results ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: monospace;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+ 
+    /* Comparison table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 16px;
+    }
+    th {
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { color: var(--text); font-weight: 500; }
+    .winner { color: var(--accent2); font-weight: 600; }
+    .tag-rf {
+      display: inline-block;
+      background: rgba(47,129,247,0.15);
+      color: var(--accent);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: 6px;
+    }
+ 
+    /* ── Team ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .team-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+    .team-role {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .team-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .team-reg {
+      font-size: 12px;
+      color: var(--muted);
+    }
+ 
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 30px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+ 
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .card-grid, .team-grid { grid-template-columns: 1fr; }
+      nav { padding: 10px 16px; }
+      .nav-links { gap: 14px; }
+      main { padding: 120px 16px 60px; }
+      .demo-block { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
-
-<body onload="startTimer()">
-
-<div id="timerContainer" class="fixed bottom-10 right-10 px-8 py-4 rounded-3xl flex items-center gap-4 transition-all">
-<i class="fas fa-hourglass-start text-blue-600 text-2xl" id="timerIcon"></i>
-<span id="displayTime" class="text-4xl font-black font-mono tracking-tighter">01:34</span>
+<body>
+ 
+<!-- Timer Bar -->
+<div id="timer-bar">
+  <span>PBL Presentation | 2026</span>
+  <span id="timer-display">00:00</span>
 </div>
-
-<nav class="fixed w-full z-50 glass border-b border-slate-800/50 px-8 py-4 flex justify-between items-center">
-<div class="flex items-center gap-4">
-<div class="bg-white p-1 rounded flex items-center justify-center shadow-md" style="height: 48px; width: 48px;">
-<img src="./PBL Presentation _ 2026_files/mujlogo.jpg" alt="MUJ" class="h-full w-auto object-contain" onerror="this.src='https://via.placeholder.com/50?text=MUJ'">
-</div>
-<div class="flex flex-col text-left">
-<span class="text-xl font-black text-white leading-none uppercase tracking-tighter">PBL <span class="text-blue-500 italic">2026</span></span>
-<span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dept. of Computer Science & Engineering</span>
-</div>
-</div>
+ 
+<!-- Nav -->
+<nav>
+  <div class="nav-brand">
+    <img src="https://adityasinha-1988.github.io/pblcse/mujlogo.jpg" alt="MUJ" onerror="this.style.display='none'"/>
+    <div class="nav-label">
+      <strong>PBL 2026</strong>
+      Dept. of Computer Science &amp; Engineering
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#methodology">Methodology</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
 </nav>
-
-<main class="max-w-6xl mx-auto px-6 pt-48 pb-32 space-y-32">
-
-<section class="text-center">
-<div class="inline-block px-4 py-1 border border-slate-800 rounded-full text-slate-500 text-[10px] font-mono mb-6 uppercase tracking-widest">
-ID: 2427030750
-</div>
-
-<h1 class="text-6xl md:text-7xl font-extrabold mb-8 uppercase leading-tight">
-<span class="gradient-text uppercase">LEAF DISEASE DETECTION USING COMPUTER VISION AND CNN</span>
-</h1>
-
-<p class="text-slate-400 max-w-2xl mx-auto italic text-lg leading-relaxed border-l-2 border-blue-500/30 pl-6 text-left">
-"TO DEVELOP AN AUTOMATED COMPUTER VISION BASED SYSTEM USING A CLASSICAL CONVOLUTIONAL NEURAL NETWORK (CNN) TO ACCURATELY DETECT AND CLASSIFY CROP LEAF DISEASES FOR EARLY DIAGNOSIS AND IMPROVED AGRICULTURAL PRODUCTIVITY."
-</p>
-</section>
-
-<section id="problem" class="grid md:grid-cols-2 gap-12 items-stretch">
-<div class="glass p-10 rounded-[2.5rem] flex flex-col justify-center border-l-4 border-blue-600">
-<h2 class="text-3xl font-extrabold mb-6">Problem Statement</h2>
-<p class="text-slate-400 leading-relaxed text-justify">
-CROP DISEASES POSE A MAJOR THREAT TO GLOBAL FOOD SECURITY AND FARMER LIVELIHOODS. TRADITIONAL MANUAL IDENTIFICATION METHODS ARE SLOW, LABOR-INTENSIVE, AND ERROR-PRONE, OFTEN RESULTING IN DELAYED TREATMENT AND SIGNIFICANT CROP LOSS.
-</p>
-</div>
-
-<div class="space-y-6">
-<div class="glass p-7 rounded-3xl border-r-4 border-blue-500/50">
-<h3 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2">Literature Review / Market Research</h3>
-<p class="text-sm text-slate-500 italic">
-EXISTING STUDIES SHOW THAT COMPUTER VISION AND CONVOLUTIONAL NEURAL NETWORKS ARE HIGHLY EFFECTIVE FOR IMAGE-BASED PLANT DISEASE DETECTION. DATASETS LIKE PLANTVILLAGE HAVE BEEN WIDELY USED TO TRAIN ROBUST CNN MODELS FOR AGRICULTURAL DISEASE CLASSIFICATION.
-</p>
-</div>
-
-<div class="glass p-7 rounded-3xl border-r-4 border-purple-500/50">
-<h3 class="text-purple-400 font-bold text-xs uppercase tracking-widest mb-2">Research Gap / Innovation</h3>
-<p class="text-sm text-slate-500 italic">
-MANY CURRENT SYSTEMS REQUIRE HIGH COMPUTATIONAL POWER AND COMPLEX IMPLEMENTATION. THIS PROJECT FOCUSES ON A PRACTICAL AND ACCURATE CNN-BASED COMPUTER VISION SOLUTION SUITABLE FOR REAL-WORLD AGRICULTURAL APPLICATIONS.
-</p>
-</div>
-</div>
-</section>
-
-<section id="methodology" class="space-y-12">
-<h2 class="text-4xl font-black text-center uppercase tracking-tight">System <span class="text-blue-500">Methodology</span></h2>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="glass p-8 rounded-3xl text-center">
-<i class="fas fa-database text-blue-500 text-3xl mb-4"></i>
-<h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Dataset / Input</h3>
-<p class="text-sm text-slate-500">
-PLANTVILLAGE DATASET CONTAINING MORE THAN 50,000 RGB IMAGES OF HEALTHY AND DISEASED LEAVES ACROSS MULTIPLE CROP TYPES. PREPROCESSING STEPS INCLUDE IMAGE RESIZING, NORMALIZATION, DATA AUGMENTATION, AND TRAIN-VALIDATION-TEST SPLITTING.
-</p>
-</div>
-
-<div class="glass p-8 rounded-3xl text-center">
-<i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
-<h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Model / Architecture</h3>
-<p class="text-sm text-slate-500">
-CLASSICAL CONVOLUTIONAL NEURAL NETWORK (CNN) BASED COMPUTER VISION PIPELINE CONSISTING OF CONVOLUTION LAYERS FOR FEATURE EXTRACTION, RELU ACTIVATION FOR NON-LINEAR LEARNING, MAXPOOLING FOR DIMENSIONALITY REDUCTION, FLATTEN LAYER, AND DENSE + SOFTMAX LAYERS FOR FINAL DISEASE CLASSIFICATION.
-</p>
-</div>
-
-<div class="glass p-8 rounded-3xl text-center border-2 border-green-500/20 bg-green-500/5">
-<i class="fab fa-python text-green-500 text-3xl mb-4"></i>
-<h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-green-400">Live Execution</h3>
-<a href="https://colab.research.google.com/drive/11EdxGXe0t8aHefaeB_F4JvfHPQ5lgp14?hl=en#scrollTo=j1XWObwCcj4Z" target="_blank" class="px-6 py-2 bg-green-600 rounded-full text-[10px] font-black hover:bg-green-500 transition shadow-lg shadow-green-900/40">
-VIEW CODE / DEMO
-</a>
-</div>
-
-</div>
-</section>
-
-<section id="results" class="glass p-12 rounded-[3.5rem] border-t-4 border-blue-500">
-<h2 class="text-3xl font-black mb-12 text-center uppercase tracking-tight">Results & <span class="text-blue-500">Analysis</span></h2>
-
-<div class="grid md:grid-cols-2 gap-16 items-center">
-<div class="h-80"><canvas id="resultsChart"></canvas></div>
-
-<div class="space-y-6">
-<div class="p-6 rounded-2xl bg-white/5 flex justify-between items-center border border-white/10 shadow-inner">
-<span class="text-slate-400 font-bold uppercase text-xs tracking-widest">Accuracy / Performance</span>
-<span class="text-blue-400 font-mono font-black text-3xl">84%</span>
-</div>
-<p class="text-slate-500 text-sm italic text-justify leading-relaxed">
-The proposed CNN-based computer vision model achieved approximately 84% classification accuracy on the PlantVillage dataset, demonstrating reliable performance for early crop disease detection.
-</p>
-</div>
-</div>
-</section>
-
-<section id="team" class="text-center pt-10 border-t border-slate-900">
-<h2 class="text-[10px] font-black text-slate-600 uppercase tracking-[0.5em] mb-12">Academic Credits</h2>
-
-<div class="flex flex-wrap justify-center gap-10">
-<div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-blue-600">
-<p class="text-[9px] font-bold text-blue-500 mb-2 uppercase tracking-widest">Project Guide</p>
-<p class="font-black text-xl text-slate-100">Tapan Kumar Dey</p>
-</div>
-
-<div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-slate-700">
-<p class="text-[9px] font-bold text-slate-400 mb-2 uppercase tracking-widest">Team Member 1</p>
-<p class="font-black text-xl text-slate-100">Tanveer Singh Chawla</p>
-<p class="text-[10px] text-slate-500 mt-1">2427030750</p>
-</div>
-</div>
-</section>
-
+ 
+<!-- Main -->
+<main>
+ 
+  <!-- Hero -->
+  <div class="hero">
+    <div class="reg-badge">ID: [YOUR_REG_NO]</div>
+    <h1>Credit Card Fraud Detection<br>using Classical Machine Learning</h1>
+    <p class="hero-statement">
+      Can machine learning models reliably identify fraudulent credit card transactions from anonymized behavioral data — and which classical algorithm performs best under severe class imbalance?
+    </p>
+  </div>
+ 
+  <!-- Problem Statement -->
+  <section id="problem">
+    <h2>Problem Statement</h2>
+    <p>
+      Credit card fraud causes billions in financial losses globally each year. In India alone, over ₹2,600 crore was lost to digital payment fraud in 2023. The core challenge is detecting fraud in real-time from millions of transactions, where fraudulent cases account for only 0.17% of all activity — making it extremely difficult for models to learn fraud patterns without special handling.
+    </p>
+ 
+    <h3>Literature Review / Market Research</h3>
+    <p>
+      Existing industry solutions such as Visa's Advanced Authorization and Mastercard's Decision Intelligence use deep neural networks and graph ML, processing 500+ features per transaction with 99.9%+ accuracy. Academic research extensively uses the ULB Credit Card dataset (Kaggle) as a benchmark — with studies comparing Logistic Regression, Random Forest, XGBoost, and neural networks. SMOTE-based oversampling has been established as the standard approach to handle class imbalance in fraud detection tasks.
+    </p>
+ 
+    <h3>Research Gap / Innovation</h3>
+    <p>
+      Most student-level implementations use a single model without systematic comparison. This project addresses that gap by building, evaluating, and comparing two distinct classical ML models — Random Forest and XGBoost — under identical preprocessing and SMOTE conditions, providing a clear, evidence-based model selection decision backed by multiple evaluation metrics.
+    </p>
+  </section>
+ 
+  <!-- Methodology -->
+  <section id="methodology">
+    <h2>System Methodology</h2>
+ 
+    <h3>Dataset / Input</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Source</div>
+        <div class="card-body">Kaggle — ULB Credit Card Fraud Detection Dataset (Université Libre de Bruxelles + Worldline)</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Size</div>
+        <div class="card-body">284,807 transactions · 31 columns · 2 days of real European cardholder data (Sept 2013)</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Features</div>
+        <div class="card-body">Time, Amount, V1–V28 (PCA-anonymized behavioral features), Class (0 = Genuine, 1 = Fraud)</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Preprocessing</div>
+        <div class="card-body">StandardScaler on Amount &amp; Time · SMOTE to fix 0.17% class imbalance · 80/20 stratified train-test split</div>
+      </div>
+    </div>
+ 
+    <h3>Model / Architecture</h3>
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-num">1</div>
+        <div class="pipe-content">
+          <strong>Data Loading &amp; Exploration</strong>
+          <span>Load CSV → verify shape (284,807 × 31) → visualize class distribution</span>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">2</div>
+        <div class="pipe-content">
+          <strong>Preprocessing</strong>
+          <span>Scale Amount &amp; Time using StandardScaler · separate features (X) and target (y)</span>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">3</div>
+        <div class="pipe-content">
+          <strong>SMOTE Balancing</strong>
+          <span>Applied only on training data · balanced fraud from 394 → 227,451 synthetic samples</span>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">4</div>
+        <div class="pipe-content">
+          <strong>Model Training</strong>
+          <span>Random Forest (100 trees, max_depth=10) · XGBoost (100 trees, lr=0.1, max_depth=6)</span>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">5</div>
+        <div class="pipe-content">
+          <strong>Evaluation &amp; Comparison</strong>
+          <span>Precision · Recall · F1-Score · ROC-AUC · Confusion Matrix · Feature Importance</span>
+        </div>
+      </div>
+    </div>
+ 
+    <h3>Live Execution</h3>
+    <div class="demo-block">
+      <div class="demo-text">
+        <strong>Google Colab Notebook — Live Demo</strong>
+        <span>Full pipeline: data loading → preprocessing → SMOTE → model training → live fraud prediction</span>
+      </div>
+      <a class="demo-btn" href="[YOUR_COLAB_LINK_HERE]" target="_blank">
+        ▶ VIEW CODE / DEMO
+      </a>
+    </div>
+  </section>
+ 
+  <!-- Results -->
+  <section id="results">
+    <h2>Results &amp; Analysis</h2>
+ 
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-val">88%</div>
+        <div class="metric-label">Recall (RF)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">0.98</div>
+        <div class="metric-label">ROC-AUC (RF)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">86</div>
+        <div class="metric-label">Frauds Caught</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">100%</div>
+        <div class="metric-label">Demo Confidence</div>
+      </div>
+    </div>
+ 
+    <p>Random Forest outperformed XGBoost across all evaluation metrics. Recall was prioritised as the primary metric — in fraud detection, missing a real fraud is more costly than a false alarm.</p>
+ 
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Random Forest <span class="tag-rf">Winner</span></th>
+          <th>XGBoost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Precision</td>
+          <td class="winner">0.43</td>
+          <td>0.35</td>
+        </tr>
+        <tr>
+          <td>Recall</td>
+          <td class="winner">0.88</td>
+          <td>0.87</td>
+        </tr>
+        <tr>
+          <td>F1-Score</td>
+          <td class="winner">0.58</td>
+          <td>0.49</td>
+        </tr>
+        <tr>
+          <td>ROC-AUC</td>
+          <td class="winner">0.98</td>
+          <td>0.97</td>
+        </tr>
+        <tr>
+          <td>Frauds Caught (of 98)</td>
+          <td class="winner">86</td>
+          <td>85</td>
+        </tr>
+        <tr>
+          <td>False Alarms</td>
+          <td class="winner">115</td>
+          <td>161</td>
+        </tr>
+      </tbody>
+    </table>
+ 
+    <p style="margin-top:14px;">
+      Top fraud-predictive features identified: <strong style="color:var(--text)">V14</strong> (importance 0.200), V10, V4, V12, V17 — discovered automatically by the model without domain guidance.
+    </p>
+  </section>
+ 
+  <!-- Team -->
+  <section id="team">
+    <h2>Academic Credits</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-role">Project Guide</div>
+        <div class="team-name">[Guide Name]</div>
+        <div class="team-reg">Manipal University Jaipur</div>
+      </div>
+      <div class="team-card">
+        <div class="team-role">Team Member</div>
+        <div class="team-name">[Your Name]</div>
+        <div class="team-reg">[Registration Number]</div>
+      </div>
+    </div>
+  </section>
+ 
 </main>
-
-<footer class="py-12 text-center bg-black/40 border-t border-slate-900">
-<p class="text-slate-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Manipal University Jaipur</p>
-<p class="text-slate-500 text-[9px] font-medium tracking-[0.2em] uppercase opacity-50">
-Department of Computer Science & Engineering • 2026
-</p>
+ 
+<!-- Footer -->
+<footer>
+  Manipal University Jaipur &nbsp;·&nbsp; Department of Computer Science &amp; Engineering &nbsp;·&nbsp; 2026
 </footer>
-
+ 
+<!-- Timer Script -->
 <script>
-let sec = 0;
-let timer = null;
-function startTimer() {
-timer = setInterval(() => {
-sec++;
-let m = Math.floor(sec / 60);
-let s = sec % 60;
-document.getElementById('displayTime').innerText =
-`${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-}, 1000);
-}
+  let seconds = 0;
+  const display = document.getElementById('timer-display');
+  setInterval(() => {
+    seconds++;
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    display.textContent = m + ':' + s;
+  }, 1000);
 </script>
-
-<script>
-const ctx = document.getElementById('resultsChart').getContext('2d');
-new Chart(ctx, {
-type: 'bar',
-data: {
-labels: ['Existing System', 'Our Solution'],
-datasets: [{
-data: [70, 84],
-backgroundColor: ['#1e293b', '#3b82f6'],
-borderRadius: 15,
-barThickness: 50
-}]
-},
-options: {
-responsive: true,
-maintainAspectRatio: false,
-plugins: { legend: { display: false } },
-scales: {
-y: {
-beginAtZero: true,
-grid: { color: '#ffffff05' },
-ticks: { color: '#475569' }
-},
-x: {
-grid: { display: false },
-ticks: { color: '#475569' }
-}
-}
-}
-});
-</script>
-
+ 
 </body>
 </html>
